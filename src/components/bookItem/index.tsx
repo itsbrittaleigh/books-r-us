@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 interface Props {
   book: Book;
@@ -6,20 +6,36 @@ interface Props {
 
 const BookItem: React.FC<Props> = ({
   book: {
-    title,
     author,
-    isbn,
     category,
     inventory,
+    isbn,
     notes,
+    title,
   },
-}) => (
-  <div style={{ padding: '20px 0' }}>
-    <p>{title} by {author}: {inventory} in stock</p>
-    <p>{category}</p>
-    <p>{isbn}</p>
-    <p>{notes}</p>
-  </div>
-);
+}) => {
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+
+  return (
+    <div style={{ padding: '20px 0' }}>
+      {!isEditing ? (
+        <>
+          <p>{title} by {author}: {inventory} in stock</p>
+          <p>{category}</p>
+          <p>{isbn}</p>
+          <p>{notes}</p>
+          <button
+            onClick={() => setIsEditing(true)}
+            onKeyDown={() => setIsEditing(true)}
+          >
+            Edit
+          </button>
+        </>
+      ) : (
+        <p>editing</p>
+      )}
+    </div>
+  );
+};
 
 export default BookItem;

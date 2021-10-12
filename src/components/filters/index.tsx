@@ -28,7 +28,7 @@ const Filters: React.FC<Props> = ({
     }
 
     setFilteredGenres(updatedGenreList);
-  }
+  };
 
   return (
     <ul>
@@ -39,8 +39,9 @@ const Filters: React.FC<Props> = ({
           aria-labelledby="display-available"
           role="switch"
           onClick={() => toggleDisplayOnlyAvailable(!displayOnlyAvailable)}
+          onKeyDown={() => toggleDisplayOnlyAvailable(!displayOnlyAvailable)}
         >
-          toggle
+          {displayOnlyAvailable ? 'on' : 'off'}
         </button>
       </li>
       <li>
@@ -48,14 +49,19 @@ const Filters: React.FC<Props> = ({
           <legend>What genres are you looking for?</legend>
           {genres.map((genre: string) => (
             <div key={genre}>
-              <input id={genre} type="checkbox" onChange={() => updateGenres(genre)} />
+              <input
+                checked={filteredGenres.includes(genre)}
+                id={genre}
+                type="checkbox"
+                onChange={() => updateGenres(genre)}
+              />
               <label htmlFor={genre}>{genre}</label>
             </div>
           ))}
         </fieldset>
       </li>
     </ul>
-  )
+  );
 };
 
 export default Filters;
