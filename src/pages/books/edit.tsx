@@ -48,6 +48,7 @@ const Edit: React.FC<Props> = ({ match }) => {
       {book ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <div>
+            <label htmlFor="title">Title</label>
             <input
               defaultValue={book.title}
               {...register('title', { required: true })}
@@ -57,6 +58,7 @@ const Edit: React.FC<Props> = ({ match }) => {
             )}
           </div>
           <div>
+            <label htmlFor="author">Author</label>
             <input
               defaultValue={book.author}
               {...register('author', { required: true })}
@@ -66,6 +68,7 @@ const Edit: React.FC<Props> = ({ match }) => {
             )}
           </div>
           <div>
+            <label htmlFor="isbn">ISBN</label>
             <input
               defaultValue={book.isbn}
               {...register('isbn', { pattern: /^[0-9]{10}$/i })}
@@ -75,6 +78,7 @@ const Edit: React.FC<Props> = ({ match }) => {
             )}
           </div>
           <div>
+            <label htmlFor="inventory">Inventory</label>
             <input
               defaultValue={book.inventory}
               type="number"
@@ -85,6 +89,7 @@ const Edit: React.FC<Props> = ({ match }) => {
             )}
           </div>
           <div>
+            <label htmlFor="category">Category</label>
             <input
               defaultValue={book.category}
               {...register('category', { required: true })}
@@ -94,6 +99,7 @@ const Edit: React.FC<Props> = ({ match }) => {
             )}
           </div>
           <div>
+            <label htmlFor="notes">Notes</label>
             <textarea
               defaultValue={book.notes?.toString()}
               {...register('notes')}
