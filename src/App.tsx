@@ -5,9 +5,10 @@ import {
   Route,
 } from 'react-router-dom';
 import Home from './pages';
-import EditBook from './pages/books/edit';
-import booksMock from './data/booksMock';
 import CreateBook from './pages/books/create';
+import EditBook from './pages/books/edit';
+import ViewBook from './pages/books/view';
+import booksMock from './data/booksMock';
 
 const App: React.FC = () => {
   const [books, setBooks] = useState<Book[]>(booksMock);
@@ -36,8 +37,9 @@ const App: React.FC = () => {
             urlFilteredGenres={urlFilteredGenres || []}
           />
         </Route>
-        <Route path="/books/create" component={CreateBook} />
-        <Route path="/books/:id/edit" component={EditBook} />
+        <Route exact path="/books/create" component={CreateBook} />
+        <Route exact path="/books/:id" component={ViewBook} />
+        <Route exact path="/books/:id/edit" component={EditBook} />
       </Switch>
     </Router>
   );

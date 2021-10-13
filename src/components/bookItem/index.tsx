@@ -35,9 +35,7 @@ const BookItem: React.FC<Props> = ({
     <>
       <div style={{ padding: '20px 0' }}>
         <p>{title} by {author}: {inventory} in stock</p>
-        <p>{category}</p>
-        <p>{isbn}</p>
-        <p>{notes}</p>
+        <a href={`/books/${id}`}>View details</a>
         <a
           href={`/books/${id}/edit`}
         >
