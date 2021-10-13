@@ -1,4 +1,5 @@
 import React from 'react';
+import { LOCAL_STORAGE_KEY } from '../../constants';
 
 interface Props {
   match: {
@@ -10,7 +11,7 @@ interface Props {
 
 const View: React.FC<Props> = ({ match }) => {
   const id = parseInt(match.params.id, 10);
-  const books: Book[] = JSON.parse(localStorage.getItem('BRU_Books')!);
+  const books: Book[] = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)!);
   const book: Book | undefined = books.find((book: Book) => book.id === id);
 
   return (

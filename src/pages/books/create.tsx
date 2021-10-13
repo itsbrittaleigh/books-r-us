@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
+import { LOCAL_STORAGE_KEY } from '../../constants';
 
 type FormValues = {
   books: {
@@ -14,7 +15,7 @@ type FormValues = {
 };
 
 const Create: React.FC = () => {
-  const books = JSON.parse(localStorage.getItem('BRU_Books')!);
+  const books = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)!);
   const nextId = Math.max.apply(Math, books.map((book: Book) => book.id )) + 1;
 
   const { control, formState: { errors }, handleSubmit, register } = useForm<FormValues>({
@@ -47,7 +48,7 @@ const Create: React.FC = () => {
 
     books.push(...booksToAdd);
 
-    localStorage.setItem('BRU_Books', JSON.stringify(books));
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(books));
   };
 
   return (

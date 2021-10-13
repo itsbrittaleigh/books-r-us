@@ -9,17 +9,17 @@ import CreateBook from './pages/books/create';
 import EditBook from './pages/books/edit';
 import ViewBook from './pages/books/view';
 import booksMock from './data/booksMock';
+import { LOCAL_STORAGE_KEY } from './constants';
 
 const App: React.FC = () => {
   const [books, setBooks] = useState<Book[]>(booksMock);
-  const localStorageKey = 'BRU_Books';
   const params = (new URL(`${document.location}`)).searchParams;
 
   useEffect(() => {
-    if (localStorage.getItem(localStorageKey)) {
-      setBooks(JSON.parse(localStorage.getItem(localStorageKey)!));
+    if (localStorage.getItem(LOCAL_STORAGE_KEY)) {
+      setBooks(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)!));
     } else {
-      localStorage.setItem(localStorageKey, JSON.stringify(books));
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(books));
     }
     // empty dependency array because we do not want this to trigger re-render in an infinite loop
   }, []);

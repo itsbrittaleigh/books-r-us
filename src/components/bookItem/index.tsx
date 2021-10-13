@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Modal from '../../components/modal';
+import { LOCAL_STORAGE_KEY } from '../../constants';
 
 interface Props {
   book: Book;
@@ -16,7 +17,7 @@ const BookItem: React.FC<Props> = ({
     title,
   },
 }) => {
-  const books: Book[] = JSON.parse(localStorage.getItem('BRU_Books')!);
+  const books: Book[] = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)!);
   const [displayConfirmationModal, setDisplayConfirmationModal] = useState<boolean>(false);
 
   const deleteBook = (): void => {
@@ -25,7 +26,7 @@ const BookItem: React.FC<Props> = ({
       books.splice(index, 1);
     }
 
-    localStorage.setItem('BRU_Books', JSON.stringify(books));
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(books));
 
     // refresh page to show updated list
     window.location.reload();

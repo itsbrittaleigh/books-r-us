@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { LOCAL_STORAGE_KEY } from '../../constants';
 
 interface Props {
   match: {
@@ -21,7 +22,7 @@ interface IFormInput {
 const Edit: React.FC<Props> = ({ match }) => {
   const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
   const id = parseInt(match.params.id, 10);
-  const books: Book[] = JSON.parse(localStorage.getItem('BRU_Books')!);
+  const books: Book[] = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)!);
   const book: Book | undefined = books.find((book: Book) => book.id === id);
 
   const onSubmit = (data: IFormInput) => {
@@ -40,7 +41,7 @@ const Edit: React.FC<Props> = ({ match }) => {
     });
 
     // save to localStorage
-    localStorage.setItem('BRU_Books', JSON.stringify(books));
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(books));
   };
 
   return (
