@@ -8,34 +8,24 @@ const BookItem: React.FC<Props> = ({
   book: {
     author,
     category,
+    id,
     inventory,
     isbn,
     notes,
     title,
   },
-}) => {
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-
-  return (
-    <div style={{ padding: '20px 0' }}>
-      {!isEditing ? (
-        <>
-          <p>{title} by {author}: {inventory} in stock</p>
-          <p>{category}</p>
-          <p>{isbn}</p>
-          <p>{notes}</p>
-          <button
-            onClick={() => setIsEditing(true)}
-            onKeyDown={() => setIsEditing(true)}
-          >
-            Edit
-          </button>
-        </>
-      ) : (
-        <p>editing</p>
-      )}
-    </div>
-  );
-};
+}) => (
+  <div style={{ padding: '20px 0' }}>
+    <p>{title} by {author}: {inventory} in stock</p>
+    <p>{category}</p>
+    <p>{isbn}</p>
+    <p>{notes}</p>
+    <a
+      href={`/books/${id}/edit`}
+    >
+      Edit
+    </a>
+  </div>
+);
 
 export default BookItem;

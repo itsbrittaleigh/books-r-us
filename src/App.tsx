@@ -5,6 +5,7 @@ import {
   Route,
 } from 'react-router-dom';
 import Home from './pages';
+import EditBook from './pages/books/edit';
 import booksMock from './data/booksMock';
 
 const App: React.FC = () => {
@@ -34,6 +35,7 @@ const App: React.FC = () => {
             urlFilteredGenres={urlFilteredGenres || []}
           />
         </Route>
+        <Route path="/books/:id/edit" component={EditBook} />
       </Switch>
     </Router>
   );
