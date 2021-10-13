@@ -31,36 +31,40 @@ const Filters: React.FC<Props> = ({
   };
 
   return (
-    <ul>
-      <li>
-        <span id="display-available">Display only available</span>
-        <button
-          aria-checked={displayOnlyAvailable}
-          aria-labelledby="display-available"
-          role="switch"
-          onClick={() => toggleDisplayOnlyAvailable(!displayOnlyAvailable)}
-          onKeyDown={() => toggleDisplayOnlyAvailable(!displayOnlyAvailable)}
-        >
-          {displayOnlyAvailable ? 'on' : 'off'}
-        </button>
-      </li>
-      <li>
-        <fieldset>
-          <legend>What genres are you looking for?</legend>
-          {genres.map((genre: string) => (
-            <div key={genre}>
-              <input
-                checked={filteredGenres.includes(genre)}
-                id={genre}
-                type="checkbox"
-                onChange={() => updateGenres(genre)}
-              />
-              <label htmlFor={genre}>{genre}</label>
-            </div>
-          ))}
-        </fieldset>
-      </li>
-    </ul>
+    <section className="filters">
+      <div className="wrapper">
+        <ul>
+          <li>
+            <span id="display-available">Display only available</span>
+            <button
+              aria-checked={displayOnlyAvailable}
+              aria-labelledby="display-available"
+              role="switch"
+              onClick={() => toggleDisplayOnlyAvailable(!displayOnlyAvailable)}
+              onKeyDown={() => toggleDisplayOnlyAvailable(!displayOnlyAvailable)}
+            >
+              {displayOnlyAvailable ? 'on' : 'off'}
+            </button>
+          </li>
+          <li>
+            <fieldset>
+              <legend>What genres are you looking for?</legend>
+              {genres.map((genre: string) => (
+                <div key={genre}>
+                  <input
+                    checked={filteredGenres.includes(genre)}
+                    id={genre}
+                    type="checkbox"
+                    onChange={() => updateGenres(genre)}
+                  />
+                  <label htmlFor={genre}>{genre}</label>
+                </div>
+              ))}
+            </fieldset>
+          </li>
+        </ul>
+      </div>
+    </section>
   );
 };
 

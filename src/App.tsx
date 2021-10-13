@@ -10,6 +10,7 @@ import EditBook from './pages/books/edit';
 import ViewBook from './pages/books/view';
 import booksMock from './data/booksMock';
 import { LOCAL_STORAGE_KEY } from './constants';
+import "./styles/app.scss";
 
 const App: React.FC = () => {
   const [books, setBooks] = useState<Book[]>(booksMock);

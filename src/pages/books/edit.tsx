@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import Header from '../../components/header';
 import { LOCAL_STORAGE_KEY } from '../../constants';
 
 interface Props {
@@ -47,67 +48,70 @@ const Edit: React.FC<Props> = ({ match }) => {
   return (
     <>
       {book ? (
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div>
-            <label htmlFor="title">Title</label>
-            <input
-              defaultValue={book.title}
-              {...register('title', { required: true })}
-            />
-            {errors.title && (
-              <span>This field is required</span>
-            )}
-          </div>
-          <div>
-            <label htmlFor="author">Author</label>
-            <input
-              defaultValue={book.author}
-              {...register('author', { required: true })}
-            />
-            {errors.author && (
-              <span>This field is required</span>
-            )}
-          </div>
-          <div>
-            <label htmlFor="isbn">ISBN</label>
-            <input
-              defaultValue={book.isbn}
-              {...register('isbn', { pattern: /^[0-9]{10}$/i })}
-            />
-            {errors.isbn && (
-              <span>The ISBN must be exactly ten digits.</span>
-            )}
-          </div>
-          <div>
-            <label htmlFor="inventory">Inventory</label>
-            <input
-              defaultValue={book.inventory}
-              type="number"
-              {...register('inventory', { min: 0 })}
-            />
-            {errors.inventory && (
-              <span>You cannot have negative inventory.</span>
-            )}
-          </div>
-          <div>
-            <label htmlFor="category">Category</label>
-            <input
-              defaultValue={book.category}
-              {...register('category', { required: true })}
-            />
-            {errors.category && (
-              <span>This field is required.</span>
-            )}
-          </div>
-          <div>
-            <label htmlFor="notes">Notes</label>
-            <textarea
-              defaultValue={book.notes?.toString()}
-              {...register('notes')}
-            />
-          </div>
-          <button type="submit">Update</button>
-        </form>
+        <>
+          <Header heading="Edit book information" />
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div>
+              <label htmlFor="title">Title</label>
+              <input
+                defaultValue={book.title}
+                {...register('title', { required: true })}
+              />
+              {errors.title && (
+                <span>This field is required</span>
+              )}
+            </div>
+            <div>
+              <label htmlFor="author">Author</label>
+              <input
+                defaultValue={book.author}
+                {...register('author', { required: true })}
+              />
+              {errors.author && (
+                <span>This field is required</span>
+              )}
+            </div>
+            <div>
+              <label htmlFor="isbn">ISBN</label>
+              <input
+                defaultValue={book.isbn}
+                {...register('isbn', { pattern: /^[0-9]{10}$/i })}
+              />
+              {errors.isbn && (
+                <span>The ISBN must be exactly ten digits.</span>
+              )}
+            </div>
+            <div>
+              <label htmlFor="inventory">Inventory</label>
+              <input
+                defaultValue={book.inventory}
+                type="number"
+                {...register('inventory', { min: 0 })}
+              />
+              {errors.inventory && (
+                <span>You cannot have negative inventory.</span>
+              )}
+            </div>
+            <div>
+              <label htmlFor="category">Category</label>
+              <input
+                defaultValue={book.category}
+                {...register('category', { required: true })}
+              />
+              {errors.category && (
+                <span>This field is required.</span>
+              )}
+            </div>
+            <div>
+              <label htmlFor="notes">Notes</label>
+              <textarea
+                defaultValue={book.notes?.toString()}
+                {...register('notes')}
+              />
+            </div>
+            <button type="submit">Update</button>
+          </form>
+        </>
       ) : (
         <p>No book with ID # {id} found.</p>
       )}

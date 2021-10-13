@@ -1,0 +1,30 @@
+.header {
+  margin-bottom: 24px;
+
+  .wrapper {
+    border-bottom: 1px solid $light-gray;
+    padding: 12px 0;
+  }
+
+  .header__title {
+    margin: 0;
+  }
+
+  .header__description {
+    color: $gray;
+    font-style: italic;
+    margin: 0;
+  }
+
+  .wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  @media only screen and (min-width: $breakpoint) {
+    .wrapper {
+      padding: 24px 0;
+    }
+  }
+}

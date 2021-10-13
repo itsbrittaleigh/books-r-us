@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
+import Header from '../../components/header';
 import { LOCAL_STORAGE_KEY } from '../../constants';
 
 type FormValues = {
@@ -52,7 +53,11 @@ const Create: React.FC = () => {
   };
 
   return (
-    <div>
+    <>
+      <Header
+        description="Add a book or several to the Books-R-Us inventory."
+        heading="Add books"
+      />
       <form onSubmit={handleSubmit(onSubmit)}>
         {fields.map((field, index) => (
           <div key={field.id}>
@@ -158,7 +163,7 @@ const Create: React.FC = () => {
         </button>
         <button type="submit">Create book{fields.length > 1 ? 's' : ''}</button>
       </form>
-    </div>
+    </>
   );
 };
 

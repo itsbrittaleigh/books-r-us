@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import BookList from '../components/bookList';
 import Filters from '../components/filters';
+import Header from '../components/header';
 
 interface Props {
   books: Book[];
@@ -56,6 +57,12 @@ const Home: React.FC<Props> = ({
 
   return (
     <>
+      <Header heading="Inventory">
+        <a href="/books/create" className="button">
+          {/* Plus icon */}
+          Add book
+        </a>
+      </Header>
       <Filters
         displayOnlyAvailable={displayOnlyAvailable}
         filteredGenres={filteredGenres}
