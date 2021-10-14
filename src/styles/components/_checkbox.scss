@@ -1,0 +1,41 @@
+.checkbox__label {
+  padding-left: 24px;
+  position: relative;
+
+  &::before {
+    background-color: transparent;
+    border-radius: 3px;
+    border: 2px solid $primary;
+    content: "";
+    display: block;
+    height: 14px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    transition: $transition background-color;
+    width: 14px;
+  }
+
+  &::after {
+    background-image: url("../../assets/icons/check--white.svg");
+    background-size: contain;
+    content: "";
+    opacity: 0;
+    position: absolute;
+    top: 2px;
+    transition: $transition opacity;
+    left: 2px;
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.checkbox__label--is-checked {
+  &::before {
+    background-color: $primary;
+  }
+
+  &::after {
+    opacity: 1;
+  }
+}

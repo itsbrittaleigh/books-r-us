@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Modal from '../../components/modal';
-import { LOCAL_STORAGE_KEY } from '../../constants';
+import Modal from './Modal';
+import { LOCAL_STORAGE_KEY } from '../constants';
 
 interface Props {
   book: Book;

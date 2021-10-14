@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
-import Header from '../../components/header';
+import Header from '../../components/Header';
 import { LOCAL_STORAGE_KEY } from '../../constants';
 
 type FormValues = {

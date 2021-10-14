@@ -1,0 +1,39 @@
+.toggle__container {
+  align-items: center;
+  display: flex;
+  padding: 6px 0;
+}
+
+.toggle__label {
+  margin-right: 6px;
+}
+
+.toggle__button {
+  background-color: $gray;
+  border-radius: 16px;
+  border: none;
+  height: 16px;
+  position: relative;
+  transition: $transition background-color;
+  width: 30px;
+
+  &::before {
+    background-color: $white;
+    border-radius: 12px;
+    content: "";
+    height: 12px;
+    left: 2px;
+    position: absolute;
+    top: 2px;
+    transition: $transition left;
+    width: 12px;
+  }
+}
+
+.toggle__button[aria-checked="true"] {
+  background-color: $primary;
+
+  &::before {
+    left: calc(100% - 14px);
+  }
+}

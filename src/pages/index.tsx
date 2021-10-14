@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { FiPlus } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
-import BookList from '../components/bookList';
-import Filters from '../components/filters';
-import Header from '../components/header';
+import BookList from '../components/BookList';
+import Filters from '../components/Filters';
+import Header from '../components/Header';
 
 interface Props {
   books: Book[];
@@ -59,7 +60,7 @@ const Home: React.FC<Props> = ({
     <>
       <Header heading="Inventory">
         <a href="/books/create" className="button">
-          {/* Plus icon */}
+          <FiPlus className="button__icon" />
           Add book
         </a>
       </Header>

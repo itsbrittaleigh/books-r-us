@@ -1,4 +1,6 @@
 import React from 'react';
+import Checkbox from './Checkbox';
+import Toggle from './Toggle';
 
 interface Props {
   displayOnlyAvailable: boolean;
@@ -15,7 +17,7 @@ const Filters: React.FC<Props> = ({
   setFilteredGenres,
   toggleDisplayOnlyAvailable,
 }) => {
-  const updateGenres = function(genre: string): void {
+  const toggleGenreIsChecked = function(genre: string): void {
     const updatedGenreList = [...filteredGenres];
 
     if (!filteredGenres.includes(genre)) {
@@ -31,33 +33,31 @@ const Filters: React.FC<Props> = ({
   };
 
   return (
-    <section className="filters">
+    <section className="filters__container">
       <div className="wrapper">
-        <ul>
-          <li>
-            <span id="display-available">Display only available</span>
-            <button
-              aria-checked={displayOnlyAvailable}
-              aria-labelledby="display-available"
-              role="switch"
-              onClick={() => toggleDisplayOnlyAvailable(!displayOnlyAvailable)}
-              onKeyDown={() => toggleDisplayOnlyAvailable(!displayOnlyAvailable)}
-            >
-              {displayOnlyAvailable ? 'on' : 'off'}
-            </button>
+        <h2>Filter books</h2>
+        <ul className="filters__list">
+          <li className="filters__list-item">
+            <Toggle
+              id="display-available"
+              isChecked={displayOnlyAvailable}
+              onToggle={toggleDisplayOnlyAvailable}
+              label="Display available books only?"
+            />
           </li>
-          <li>
+          <li className="filters__list-item">
             <fieldset>
               <legend>What genres are you looking for?</legend>
               {genres.map((genre: string) => (
-                <div key={genre}>
-                  <input
-                    checked={filteredGenres.includes(genre)}
+                <div className="form-field">
+                  <Checkbox
                     id={genre}
-                    type="checkbox"
-                    onChange={() => updateGenres(genre)}
+                    isChecked={filteredGenres.includes(genre)}
+                    onToggle={toggleGenreIsChecked}
+                    key={genre}
+                    label={genre}
+                    value={genre}
                   />
-                  <label htmlFor={genre}>{genre}</label>
                 </div>
               ))}
             </fieldset>

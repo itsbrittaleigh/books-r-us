@@ -1,14 +1,20 @@
 .button {
+  align-items: center;
   background-color: $primary;
   border-radius: 5px;
+  display: inline-flex;
   color: $white;
   padding: 12px;
   text-decoration: none;
-  transition: 0.2s background-color ease-in-out;
+  transition: $transition background-color;
 
   &:hover {
     background-color: darken($primary, 10%);
   }
+}
+
+.button__icon {
+  margin-right: 6px;
 }
 
 .button--secondary {
