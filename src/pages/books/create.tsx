@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
+import { FiTrash2 } from 'react-icons/fi';
 import Header from '../../components/Header';
 import { LOCAL_STORAGE_KEY } from '../../constants';
 
@@ -15,27 +16,90 @@ type FormValues = {
   }[];
 };
 
+interface FormFields {
+  label: string;
+  name: string;
+  type: string;
+  validators?: {};
+  validationMessage?: string;
+};
+
+const defaultValues = {
+  author: '',
+  category: '',
+  inventory: 0,
+  isbn: '',
+  notes: '',
+  title: '',
+};
+
 const Create: React.FC = () => {
   const books = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)!);
   const nextId = Math.max.apply(Math, books.map((book: Book) => book.id )) + 1;
 
   const { control, formState: { errors }, handleSubmit, register } = useForm<FormValues>({
     defaultValues: {
-      books: [{
-        author: '',
-        category: '',
-        inventory: 0,
-        isbn: '',
-        notes: '',
-        title: '',
-      }],
+      books: [{ ...defaultValues }],
     },
-    mode: 'onBlur',
   });
   const { fields, append, remove } = useFieldArray({
     name: 'books',
     control,
   });
+
+  const formFields = [
+    {
+      label: 'Title',
+      name: 'title',
+      type: 'text',
+      validators: {
+        required: true,
+      },
+      validationMessage: 'This field is required.',
+    },
+    {
+      label: 'Author',
+      name: 'author',
+      type: 'text',
+      validators: {
+        required: true,
+      },
+      validationMessage: 'This field is required.'
+    },
+    {
+      label: 'ISBN',
+      name: 'isbn',
+      type: 'text',
+      validators: {
+        required: true,
+      },
+      validationMessage: 'This field is required',
+    },
+    {
+      label: 'Inventory',
+      name: 'inventory',
+      type: 'number',
+      validators: {
+        required: true,
+        min: 0,
+      },
+      validationMessage: 'You cannot have negative inventory',
+    },
+    {
+      label: 'Category',
+      name: 'category',
+      type: 'text',
+      validators: {
+        required: true,
+      },
+      validationMessage: 'This field is required',
+    },
+    {
+      label: 'Additional notes',
+      name: 'notes',
+      type: 'textarea',
+    },
+  ];
 
   const onSubmit = (data: FormValues) => {
     const booksToAdd = data.books;
@@ -58,111 +122,54 @@ const Create: React.FC = () => {
         description="Add a book or several to the Books-R-Us inventory."
         heading="Add books"
       />
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {fields.map((field, index) => (
-          <div key={field.id}>
+      <div className="wrapper">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {fields.map((field, index) => (
             <section key={field.id}>
-              <div className={errors?.books?.[index]?.title ? 'form__field form__field--error' : 'form__field'}>
-                <label htmlFor={`books.${index}.title`}>Title</label>
-                <input
-                  {...register(
-                    `books.${index}.title` as const,
-                    {
-                      required: true,
-                    },
+              <h2>Book #{index + 1}</h2>
+              {formFields.map((fField) => (
+                <div className={errors?.books?.[index]?.[fField.name] ? 'form-field form-field--error' : 'form-field'}>
+                  <label htmlFor={`books.${index}.title`}>{fField.label}</label>
+                  {fField.type === 'textarea' ? (
+                    <textarea {...register(`books.${index}.${[fField.name]}` as const)} />
+                  ) : (
+                    <input
+                      {...register(`books.${index}.${fField.name}` as const, { ...fField.validators })}
+                      type={fField.type}
+                    />
                   )}
-                  type="text"
-                />
-                {errors?.books?.[index]?.title && (
-                  <span>This field is required.</span>
-                )}
-              </div>
-              <div className={errors?.books?.[index]?.author ? 'form__field form__field--error' : 'form__field'}>
-                <label htmlFor={`books.${index}.author`}>Author</label>
-                <input
-                  {...register(
-                    `books.${index}.author` as const,
-                    {
-                      required: true,
-                    }
+                  {errors?.books?.[index]?.title && (
+                    <span>{fField.validationMessage}</span>
                   )}
-                  type="text"
-                />
-                {errors?.books?.[index]?.author && (
-                  <span>This field is required.</span>
-                )}
+                </div>
+              ))}
+              <div className="button__container--right">
+                <button
+                  className="button button--alternate button--delete"
+                  type="button"
+                  onClick={() => remove(index)}
+                >
+                  <FiTrash2 />
+                </button>
               </div>
-              <div className={errors?.books?.[index]?.isbn ? 'form__field form__field--error' : 'form__field'}>
-                <label htmlFor={`books.${index}.isbn`}>ISBN</label>
-                <input
-                  {...register(
-                    `books.${index}.isbn` as const,
-                    {
-                      required: true,
-                      pattern: /^[0-9]{10}$/i,
-                    })}
-                  type="text"
-                />
-                {errors?.books?.[index]?.isbn && (
-                  <span>Your ISBN must be 10 digits.</span>
-                )}
-              </div>
-              <div className={errors?.books?.[index]?.inventory ? 'form__field form__field--error' : 'form__field'}>
-                <label htmlFor={`books.${index}.inventory`}>Inventory</label>
-                <input
-                  {...register(
-                    `books.${index}.inventory` as const,
-                    {
-                      required: true,
-                      min: 0,
-                    })}
-                  type="number"
-                />
-                {errors?.books?.[index]?.inventory && (
-                  <span>You cannot have negative inventory.</span>
-                )}
-              </div>
-              <div className={errors?.books?.[index]?.category ? 'form__field form__field--error' : 'form__field'}>
-                <label htmlFor={`books.${index}.category`}>Category</label>
-                <input
-                  {...register(
-                    `books.${index}.category` as const,
-                    {
-                      required: true,
-                    })}
-                  type="text"
-                />
-                {errors?.books?.[index]?.category && (
-                  <span>This field is required.</span>
-                )}
-              </div>
-              <div className="form__field">
-                <label htmlFor={`books.${index}.notes`}>Notes</label>
-                <textarea {...register(`books.${index}.notes` as const)} />
-              </div>
-              <button type="button" onClick={() => remove(index)}>
-                Delete book
-              </button>
             </section>
+          ))}
+          <div className="button__container button__container--right">
+            <button
+              className="button--link"
+              type="button"
+              onClick={() =>
+                append([{ ...defaultValues }])
+              }
+            >
+              Add another book
+            </button>
+            <button className="button" type="submit">
+              Create book{fields.length > 1 ? 's' : ''}
+            </button>
           </div>
-        ))}
-        <button
-          type="button"
-          onClick={() =>
-            append({
-              author: '',
-              category: '',
-              inventory: 0,
-              isbn: '',
-              notes: '',
-              title: '',
-            })
-          }
-        >
-          Add another book
-        </button>
-        <button type="submit">Create book{fields.length > 1 ? 's' : ''}</button>
-      </form>
+        </form>
+      </div>
     </>
   );
 };

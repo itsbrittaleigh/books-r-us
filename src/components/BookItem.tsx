@@ -51,7 +51,6 @@ const BookItem: React.FC<Props> = ({
             <button
               className="button button--alternate button--delete"
               onClick={() => setDisplayConfirmationModal(true)}
-              onKeyDown={() => setDisplayConfirmationModal(true)}
             >
               <FiTrash2 />
             </button>
@@ -71,14 +70,10 @@ const BookItem: React.FC<Props> = ({
         <p>Are you sure you want to delete {title}?</p>
         <button
           onClick={() => setDisplayConfirmationModal(false)}
-          onKeyDown={() => setDisplayConfirmationModal(false)}
         >
           Cancel
         </button>
-        <button
-          onClick={deleteBook}
-          onKeyDown={deleteBook}
-        >
+        <button onClick={deleteBook}>
           Delete
         </button>
       </Modal>

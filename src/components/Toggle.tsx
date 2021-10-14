@@ -16,7 +16,6 @@ const Toggle: React.FC<Props> = ({ id, isChecked, label, onToggle }) => (
       aria-labelledby={id}
       role="switch"
       onClick={() => onToggle(!isChecked)}
-      onKeyDown={() => onToggle(!isChecked)}
     />
   </span>
 );

@@ -141,7 +141,7 @@ const Edit: React.FC<Props> = ({ match }) => {
                   )}
                 </div>
               ))}
-              <div className="button__container--right">
+              <div className="button__container button__container--right">
                 <button className="button" type="submit">Update</button>
               </div>
             </form>

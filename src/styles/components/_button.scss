@@ -37,7 +37,31 @@
   background-color: $warning;
 }
 
+.button--link {
+  border: none;
+  background-color: transparent;
+  color: $primary;
+  display: block;
+  font-weight: bold;
+  margin: 0;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.button__container {
+  align-items: center;
+  display: flex;
+  margin: 48px 0 60px;
+}
+
 .button__container--right {
   display: flex;
   justify-content: flex-end;
+}
+
+.button__container--right .button {
+  margin-left: 12px;
 }

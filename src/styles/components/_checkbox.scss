@@ -11,7 +11,8 @@
     height: 14px;
     left: 0;
     position: absolute;
-    top: 0;
+    top: 50%;
+    transform: translateY(-50%);
     transition: $transition background-color;
     width: 14px;
   }

@@ -1,5 +1,10 @@
 .book-item {
-  margin: 24px 0 48px;
+  margin: 24px auto 48px;
+  max-width: 690px;
+
+  @media only screen and (min-width: $breakpoint) {
+    margin: 48px auto 72px;
+  }
 }
 
 .book-item__header {
