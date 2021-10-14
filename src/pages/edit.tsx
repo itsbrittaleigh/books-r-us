@@ -21,15 +21,6 @@ interface IFormInput {
   title: string;
 };
 
-interface FormFields {
-  defaultValue: string | number;
-  label: string;
-  name: string;
-  type: string;
-  validators?: {};
-  validationMessage?: string;
-};
-
 const Edit: React.FC<Props> = ({ match }) => {
   const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
   const id = parseInt(match.params.id, 10);
@@ -55,66 +46,6 @@ const Edit: React.FC<Props> = ({ match }) => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(books));
   };
 
-  const formFields: FormFields[] = [
-    {
-      defaultValue: book?.title || '',
-      label: 'Title',
-      name: 'title',
-      type: 'text',
-      validators: {
-        required: true,
-      },
-      validationMessage: 'This field is required.',
-    },
-    {
-      defaultValue: book?.author || '',
-      label: 'Author',
-      name: 'author',
-      type: 'text',
-      validators: {
-        required: true,
-      },
-      validationMessage: 'This field is required.'
-    },
-    {
-      defaultValue: book?.isbn || '',
-      label: 'ISBN',
-      name: 'isbn',
-      type: 'text',
-      validators: {
-        required: true,
-      },
-      validationMessage: 'This field is required',
-    },
-    {
-      defaultValue: book?.inventory || 0,
-      label: 'Inventory',
-      name: 'inventory',
-      type: 'number',
-      validators: {
-        required: true,
-        min: 0,
-      },
-      validationMessage: 'You cannot have negative inventory',
-    },
-    {
-      defaultValue: book?.category || '',
-      label: 'Category',
-      name: 'category',
-      type: 'text',
-      validators: {
-        required: true,
-      },
-      validationMessage: 'This field is required',
-    },
-    {
-      defaultValue: book?.notes || '',
-      label: 'Additional notes',
-      name: 'notes',
-      type: 'textarea',
-    },
-  ];
-
   return (
     <>
       <Nav />
@@ -123,27 +54,69 @@ const Edit: React.FC<Props> = ({ match }) => {
           <Header heading="Edit book information" />
           <div className="wrapper">
             <form onSubmit={handleSubmit(onSubmit)}>
-              {formFields.map((field) => (
-                <div className={errors[field.name] ? 'form-field form-field--error' : 'form-field'}>
-                  <label htmlFor={field.name}>{field.label}</label>
-                  {field.type === 'textarea' ? (
-                    <textarea
-                      defaultValue={field.defaultValue}
-                      {...register((`${field.name}` as const), { ...field.validators })}
-                    />
-                  ) : (
-                    <input
-                      defaultValue={field.defaultValue}
-                      type={field.type}
-                      {...register((`${field.name}` as const), { ...field.validators })}
-                    />
-                  )}
-                  {errors[field.name] && (
-                    <span className="message--error">{field.validationMessage}</span>
-                  )}
-                </div>
-              ))}
-              <div className="button__container button__container--right">
+              <div className={errors.title ? 'form-field form-field--error' : 'form-field'}>
+                <label htmlFor="title">Title</label>
+                <input
+                  defaultValue={book.title}
+                  {...register('title', { required: true })}
+                  type="text"
+                />
+                {errors.title && (
+                  <span className="message--error">This field is required.</span>
+                )}
+              </div>
+              <div className={errors.author ? 'form-field form-field--error' : 'form-field'}>
+                <label htmlFor="author">Author</label>
+                <input
+                  defaultValue={book.author}
+                  {...register('author', { required: true })}
+                  type="text"
+                />
+                {errors.author && (
+                  <span className="message--error">This field is required.</span>
+                )}
+              </div>
+              <div className={errors.isbn ? 'form-field form-field--error' : 'form-field'}>
+                <label htmlFor="isbn">ISBN</label>
+                <input
+                  defaultValue={book.isbn}
+                  {...register('isbn', { required: true })}
+                  type="text"
+                />
+                {errors.isbn && (
+                  <span className="message--error">This field is required.</span>
+                )}
+              </div>
+              <div className={errors.inventory ? 'form-field form-field--error' : 'form-field'}>
+                <label htmlFor="inventory">Inventory</label>
+                <input
+                  defaultValue={book.inventory}
+                  {...register('inventory', { min: 0 })}
+                  type="number"
+                />
+                {errors.inventory && (
+                  <span className="message--error">You cannot have negative inventory.</span>
+                )}
+              </div>
+              <div className={errors.category ? 'form-field form-field--error' : 'form-field'}>
+                <label htmlFor="category">Category</label>
+                <input
+                  defaultValue={book.category}
+                  {...register('category', { required: true })}
+                  type="text"
+                />
+                {errors.category && (
+                  <span className="message--error">This field is required.</span>
+                )}
+              </div>
+              <div className="form-field">
+                <label htmlFor="notes">Notes</label>
+                <textarea
+                  defaultValue={book.notes?.toString()}
+                  {...register('notes')}
+                />
+              </div>
+              <div className="button__container--right">
                 <button className="button" type="submit">Update</button>
               </div>
             </form>

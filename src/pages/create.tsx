@@ -17,14 +17,6 @@ type FormValues = {
   }[];
 };
 
-interface FormFields {
-  label: string;
-  name: string;
-  type: string;
-  validators?: {};
-  validationMessage?: string;
-};
-
 const defaultValues = {
   author: '',
   category: '',
@@ -42,65 +34,12 @@ const Create: React.FC = () => {
     defaultValues: {
       books: [{ ...defaultValues }],
     },
+    mode: 'onBlur',
   });
   const { fields, append, remove } = useFieldArray({
     name: 'books',
     control,
   });
-
-  const formFields = [
-    {
-      label: 'Title',
-      name: 'title',
-      type: 'text',
-      validators: {
-        required: true,
-      },
-      validationMessage: 'This field is required.',
-    },
-    {
-      label: 'Author',
-      name: 'author',
-      type: 'text',
-      validators: {
-        required: true,
-      },
-      validationMessage: 'This field is required.'
-    },
-    {
-      label: 'ISBN',
-      name: 'isbn',
-      type: 'text',
-      validators: {
-        required: true,
-      },
-      validationMessage: 'This field is required',
-    },
-    {
-      label: 'Inventory',
-      name: 'inventory',
-      type: 'number',
-      validators: {
-        required: true,
-        min: 0,
-      },
-      validationMessage: 'You cannot have negative inventory',
-    },
-    {
-      label: 'Category',
-      name: 'category',
-      type: 'text',
-      validators: {
-        required: true,
-      },
-      validationMessage: 'This field is required',
-    },
-    {
-      label: 'Additional notes',
-      name: 'notes',
-      type: 'textarea',
-    },
-  ];
 
   const onSubmit = (data: FormValues) => {
     const booksToAdd = data.books;
@@ -128,23 +67,84 @@ const Create: React.FC = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           {fields.map((field, index) => (
             <section key={field.id}>
-              <h2>Book #{index + 1}</h2>
-              {formFields.map((fField) => (
-                <div className={errors?.books?.[index]?.[fField.name] ? 'form-field form-field--error' : 'form-field'}>
-                  <label htmlFor={`books.${index}.title`}>{fField.label}</label>
-                  {fField.type === 'textarea' ? (
-                    <textarea {...register(`books.${index}.${[fField.name]}` as const)} />
-                  ) : (
-                    <input
-                      {...register(`books.${index}.${fField.name}` as const, { ...fField.validators })}
-                      type={fField.type}
-                    />
+              <div className={errors?.books?.[index]?.title ? 'form-field form-field--error' : 'form-field'}>
+                <label htmlFor={`books.${index}.title`}>Title</label>
+                <input
+                  {...register(
+                    `books.${index}.title` as const,
+                    {
+                      required: true,
+                    },
                   )}
-                  {errors?.books?.[index]?.title && (
-                    <span>{fField.validationMessage}</span>
+                  type="text"
+                />
+                {errors?.books?.[index]?.title && (
+                  <span>This field is required.</span>
+                )}
+              </div>
+              <div className={errors?.books?.[index]?.author ? 'form-field form-field--error' : 'form-field'}>
+                <label htmlFor={`books.${index}.author`}>Author</label>
+                <input
+                  {...register(
+                    `books.${index}.author` as const,
+                    {
+                      required: true,
+                    }
                   )}
-                </div>
-              ))}
+                  type="text"
+                />
+                {errors?.books?.[index]?.author && (
+                  <span>This field is required.</span>
+                )}
+              </div>
+              <div className={errors?.books?.[index]?.isbn ? 'form-field form-field--error' : 'form-field'}>
+                <label htmlFor={`books.${index}.isbn`}>ISBN</label>
+                <input
+                  {...register(
+                    `books.${index}.isbn` as const,
+                    {
+                      required: true,
+                      pattern: /^[0-9]{10}$/i,
+                    })}
+                  type="text"
+                />
+                {errors?.books?.[index]?.isbn && (
+                  <span>Your ISBN must be 10 digits.</span>
+                )}
+              </div>
+              <div className={errors?.books?.[index]?.inventory ? 'form-field form-field--error' : 'form-field'}>
+                <label htmlFor={`books.${index}.inventory`}>Inventory</label>
+                <input
+                  {...register(
+                    `books.${index}.inventory` as const,
+                    {
+                      required: true,
+                      min: 0,
+                    })}
+                  type="number"
+                />
+                {errors?.books?.[index]?.inventory && (
+                  <span>You cannot have negative inventory.</span>
+                )}
+              </div>
+              <div className={errors?.books?.[index]?.category ? 'form-field form-field--error' : 'form-field'}>
+                <label htmlFor={`books.${index}.category`}>Category</label>
+                <input
+                  {...register(
+                    `books.${index}.category` as const,
+                    {
+                      required: true,
+                    })}
+                  type="text"
+                />
+                {errors?.books?.[index]?.category && (
+                  <span>This field is required.</span>
+                )}
+              </div>
+              <div className="form-field">
+                <label htmlFor={`books.${index}.notes`}>Notes</label>
+                <textarea {...register(`books.${index}.notes` as const)} />
+              </div>
               <div className="button__container--right">
                 <button
                   className="button button--alternate button--delete"
