@@ -1,0 +1,56 @@
+.modal__background {
+  background-color: darken($primary, 10%);
+  height: 100vh;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  transition: $transition opacity;
+  width: 100vw;
+  z-index: -100;
+}
+
+.modal__container {
+  background-color: $white;
+  border-radius: 3px;
+  max-width: 690px;
+  max-height: 80vh;
+  overflow: scroll;
+  opacity: 0;
+  padding: 72px 48px 48px;
+  pointer-events: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 94vw;
+  z-index: -100;
+}
+
+.modal__close-icon {
+  color: $warning;
+  cursor: pointer;
+  height: 36px;
+  padding: 6px;
+  position: absolute;
+  right: 24px;
+  top: 24px;
+  width: 36px;
+  z-index: 102;
+}
+
+// visible
+.modal--is-visible {
+  .modal__background {
+    opacity: 0.9;
+    pointer-events: all;
+    z-index: 100;
+  }
+
+  .modal__container {
+    opacity: 1;
+    pointer-events: all;
+    z-index: 101;
+  }
+}

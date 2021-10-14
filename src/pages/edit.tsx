@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
+import DeleteModal from '../components/DeleteModal';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
 import { getBookById, removeBookById, updateBookById } from '../services/Book';
@@ -25,6 +26,7 @@ interface IFormInput {
 const Edit: React.FC<Props> = ({ match }) => {
   const history = useHistory();
   const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
+  const [displayConfirmationModal, setDisplayConfirmationModal] = useState<boolean>(false);
   const id = parseInt(match.params.id, 10);
   const book = getBookById(id);
 
@@ -119,7 +121,7 @@ const Edit: React.FC<Props> = ({ match }) => {
                 <button
                   className="button--link button--delete"
                   type="button"
-                  onClick={deleteBook}
+                  onClick={() => setDisplayConfirmationModal(true)}
                 >
                   Delete
                 </button>
@@ -127,6 +129,12 @@ const Edit: React.FC<Props> = ({ match }) => {
               </div>
             </form>
           </div>
+          <DeleteModal
+            display={displayConfirmationModal}
+            setDisplay={setDisplayConfirmationModal}
+            title={book.title}
+            deleteBook={deleteBook}
+          />
         </>
       ) : (
         <p>No book with ID # {id} found.</p>

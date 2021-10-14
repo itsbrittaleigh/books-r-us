@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FiEdit2, FiTrash2 } from 'react-icons/fi';
-import Modal from './Modal';
+import DeleteModal from './DeleteModal';
 import { removeBookById } from '../services/Book';
 
 interface Props {
@@ -58,17 +58,12 @@ const BookItem: React.FC<Props> = ({
           View details &rarr;
         </a>
       </div>
-      <Modal isVisible={displayConfirmationModal}>
-        <p>Are you sure you want to delete {title}?</p>
-        <button
-          onClick={() => setDisplayConfirmationModal(false)}
-        >
-          Cancel
-        </button>
-        <button onClick={deleteBook}>
-          Delete
-        </button>
-      </Modal>
+      <DeleteModal
+        display={displayConfirmationModal}
+        setDisplay={setDisplayConfirmationModal}
+        title={title}
+        deleteBook={deleteBook}
+      />
     </>
   );
 };
