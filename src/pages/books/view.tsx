@@ -1,6 +1,7 @@
 import React from 'react';
 import { FiEdit2 } from 'react-icons/fi';
 import Header from '../../components/Header';
+import Nav from '../../components/Nav';
 import { LOCAL_STORAGE_KEY } from '../../constants';
 
 interface Props {
@@ -18,6 +19,7 @@ const View: React.FC<Props> = ({ match }) => {
 
   return (
     <>
+      <Nav />
       {book ? (
         <>
           <Header heading="Book details">

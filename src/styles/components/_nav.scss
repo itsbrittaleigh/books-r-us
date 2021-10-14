@@ -1,0 +1,16 @@
+.nav {
+  padding: 12px 0;
+  background-color: $primary;
+  color: $white;
+
+  .nav__item {
+    align-items: center;
+    color: $white;
+    display: flex;
+    font-size: 20px;
+  }
+
+  .nav__item svg {
+    margin-right: 12px;
+  }
+}

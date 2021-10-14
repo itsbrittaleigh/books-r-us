@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import Header from '../../components/Header';
+import Nav from '../../components/Nav';
 import { LOCAL_STORAGE_KEY } from '../../constants';
 
 interface Props {
@@ -116,6 +117,7 @@ const Edit: React.FC<Props> = ({ match }) => {
 
   return (
     <>
+      <Nav />
       {book ? (
         <>
           <Header heading="Edit book information" />
