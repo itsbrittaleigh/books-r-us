@@ -44,7 +44,7 @@ const BookItem: React.FC<Props> = ({
           <div className="book-item__actions">
             <a
               className="button button--alternate"
-              href={`/books/${id}/edit`}
+              href={`/${id}/edit`}
             >
               <FiEdit2 />
             </a>
@@ -61,7 +61,7 @@ const BookItem: React.FC<Props> = ({
         )}
         <a
           className="book-item__view-details"
-          href={`/books/${id}`}
+          href={`/${id}`}
         >
           View details &rarr;
         </a>

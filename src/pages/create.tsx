@@ -1,9 +1,9 @@
 import React from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { FiTrash2 } from 'react-icons/fi';
-import Header from '../../components/Header';
-import Nav from '../../components/Nav';
-import { LOCAL_STORAGE_KEY } from '../../constants';
+import Header from '../components/Header';
+import Nav from '../components/Nav';
+import { LOCAL_STORAGE_KEY } from '../constants';
 
 type FormValues = {
   books: {

@@ -1,8 +1,8 @@
 import React from 'react';
 import { FiEdit2 } from 'react-icons/fi';
-import Header from '../../components/Header';
-import Nav from '../../components/Nav';
-import { LOCAL_STORAGE_KEY } from '../../constants';
+import Header from '../components/Header';
+import Nav from '../components/Nav';
+import { LOCAL_STORAGE_KEY } from '../constants';
 
 interface Props {
   match: {
@@ -25,7 +25,7 @@ const View: React.FC<Props> = ({ match }) => {
           <Header heading="Book details">
             <a
               className="button"
-              href={`/books/${book.id}/edit`}
+              href={`/${book.id}/edit`}
             >
               <FiEdit2 className="button__icon" />
               Edit

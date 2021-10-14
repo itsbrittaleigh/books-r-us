@@ -59,7 +59,7 @@ const Home: React.FC<Props> = ({
   return (
     <>
       <Header heading="Inventory">
-        <a href="/books/create" className="button">
+        <a href="/create" className="button">
           <FiPlus className="button__icon" />
           Add book
         </a>

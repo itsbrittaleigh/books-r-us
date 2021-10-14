@@ -5,9 +5,9 @@ import {
   Route,
 } from 'react-router-dom';
 import Home from './pages';
-import CreateBook from './pages/books/create';
-import EditBook from './pages/books/edit';
-import ViewBook from './pages/books/view';
+import CreateBook from './pages/create';
+import EditBook from './pages/edit';
+import ViewBook from './pages/view';
 import booksMock from './data/booksMock';
 import { LOCAL_STORAGE_KEY } from './constants';
 import "./styles/app.scss";
@@ -38,9 +38,9 @@ const App: React.FC = () => {
             urlFilteredGenres={urlFilteredGenres || []}
           />
         </Route>
-        <Route exact path="/books/create" component={CreateBook} />
-        <Route exact path="/books/:id" component={ViewBook} />
-        <Route exact path="/books/:id/edit" component={EditBook} />
+        <Route exact path="/create" component={CreateBook} />
+        <Route exact path="/:id" component={ViewBook} />
+        <Route exact path="/:id/edit" component={EditBook} />
       </Switch>
     </Router>
   );
