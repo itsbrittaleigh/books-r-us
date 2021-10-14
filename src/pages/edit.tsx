@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import DeleteModal from '../components/DeleteModal';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
-import { getBookById, removeBookById, updateBookById } from '../services/Book';
+import { getAllIsbns, getBookById, removeBookById, updateBookById } from '../services/Book';
 
 interface Props {
   match: {
@@ -47,6 +47,19 @@ const Edit: React.FC<Props> = ({ match }) => {
       });
   };
 
+  // ISBN should not already exist
+  const validateIsbn = (value: string) => {
+    const isbns = getAllIsbns();
+
+    // remove the current ISBN from the list
+    const index = isbns.findIndex((isbn: string) => isbn === book.isbn);
+    if (index > -1) {
+      isbns.splice(index, 1);
+    }
+
+    return !(isbns.includes(value));
+  };
+
   return (
     <>
       <Nav />
@@ -81,11 +94,13 @@ const Edit: React.FC<Props> = ({ match }) => {
                 <label htmlFor="isbn">ISBN</label>
                 <input
                   defaultValue={book.isbn}
-                  {...register('isbn', { required: true })}
+                  {...register('isbn', { required: true, validate: (value) => validateIsbn(value) })}
                   type="text"
                 />
                 {errors.isbn && (
-                  <span className="message--error">This field is required.</span>
+                  <span className="message--error">
+                    This field is required and must not already exist.
+                  </span>
                 )}
               </div>
               <div className={errors.inventory ? 'form-field form-field--error' : 'form-field'}>

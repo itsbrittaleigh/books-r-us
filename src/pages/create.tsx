@@ -4,7 +4,7 @@ import { FiTrash2 } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
-import { createBooks } from '../services/Book';
+import { createBooks, getAllIsbns } from '../services/Book';
 
 type FormValues = {
   books: {
@@ -33,7 +33,6 @@ const Create: React.FC = () => {
     defaultValues: {
       books: [{ ...defaultValues }],
     },
-    mode: 'onBlur',
   });
   const { fields, append, remove } = useFieldArray({
     name: 'books',
@@ -45,6 +44,23 @@ const Create: React.FC = () => {
       window.scrollTo(0, 0);
       history.push('/')
     });
+  };
+
+  // ISBN should not already exist
+  const validateIsbn = (value: string) => {
+    const isbns = getAllIsbns();
+    const currentIsbns: string[] = [];
+
+    // make sure none of the current ISBNs match either
+    control._formValues.books.forEach((book: Book) => {
+      if (book.isbn) {
+        currentIsbns.push(book.isbn);
+      }
+    });
+
+    isbns.push(...currentIsbns);
+
+    return !(isbns.includes(value));
   };
 
   return (
@@ -96,11 +112,12 @@ const Create: React.FC = () => {
                     `books.${index}.isbn` as const,
                     {
                       required: true,
+                      validate: (value) => validateIsbn(value),
                     })}
                   type="text"
                 />
                 {errors?.books?.[index]?.isbn && (
-                  <span className="message--error">This field is required.</span>
+                  <span className="message--error">This field is required and must be unique.</span>
                 )}
               </div>
               <div className={errors?.books?.[index]?.inventory ? 'form-field form-field--error' : 'form-field'}>

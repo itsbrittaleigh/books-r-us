@@ -59,3 +59,12 @@ export const updateBookById = (id: number, newData: Book) => {
   // save to localStorage
   return Promise.resolve(localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(books)));
 };
+
+export const getAllIsbns = () => {
+  const books = getAllBooks();
+  const isbns: string[] = [];
+
+  books.forEach((book: Book) => isbns.push(book.isbn));
+
+  return isbns;
+}
