@@ -49,7 +49,10 @@ const Filters: React.FC<Props> = ({
             <fieldset>
               <legend>What genres are you looking for?</legend>
               {genres.map((genre: string) => (
-                <div className="form-field">
+                <div
+                  className="form-field"
+                  key={genre}
+                >
                   <Checkbox
                     id={genre}
                     isChecked={filteredGenres.includes(genre)}
