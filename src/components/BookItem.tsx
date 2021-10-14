@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FiEdit2, FiTrash2 } from 'react-icons/fi';
 import Modal from './Modal';
 import { LOCAL_STORAGE_KEY } from '../constants';
 
@@ -34,20 +35,37 @@ const BookItem: React.FC<Props> = ({
 
   return (
     <>
-      <div style={{ padding: '20px 0' }}>
-        <p>{title} by {author}: {inventory} in stock</p>
-        <a href={`/books/${id}`}>View details</a>
+      <div className="book-item">
+        <div className="book-item__header">
+          <div className="book-item__header--left">
+            <h3 className="book-item__title">{title}</h3>
+            <p className="book-item__author">by {author}</p>
+          </div>
+          <div className="book-item__actions">
+            <a
+              className="button button--alternate"
+              href={`/books/${id}/edit`}
+            >
+              <FiEdit2 />
+            </a>
+            <button
+              className="button button--alternate button--delete"
+              onClick={() => setDisplayConfirmationModal(true)}
+              onKeyDown={() => setDisplayConfirmationModal(true)}
+            >
+              <FiTrash2 />
+            </button>
+          </div>
+        </div>
+        {inventory <= 0 && (
+          <p className="book-item__oos">Out of stock</p>
+        )}
         <a
-          href={`/books/${id}/edit`}
+          className="book-item__view-details"
+          href={`/books/${id}`}
         >
-          Edit
+          View details &rarr;
         </a>
-        <button
-          onClick={() => setDisplayConfirmationModal(true)}
-          onKeyDown={() => setDisplayConfirmationModal(true)}
-        >
-          Delete
-        </button>
       </div>
       <Modal isVisible={displayConfirmationModal}>
         <p>Are you sure you want to delete {title}?</p>

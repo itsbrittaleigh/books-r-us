@@ -1,0 +1,44 @@
+.book-item {
+  margin: 24px 0 48px;
+}
+
+.book-item__header {
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-between;
+}
+
+.book-item__actions {
+  display: flex;
+}
+
+.book-item__actions .button {
+  margin-right: 12px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.book-item__title {
+  margin: 0;
+}
+
+.book-item__author {
+  color: $gray;
+  margin: 0 0 12px;
+}
+
+.book-item__oos {
+  color: $warning;
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+.book-item__view-details {
+  color: $primary;
+  display: block;
+  font-weight: bold;
+  margin: 12px 0 0;
+  text-decoration: none;
+}

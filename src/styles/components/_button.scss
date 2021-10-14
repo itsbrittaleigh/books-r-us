@@ -1,9 +1,11 @@
 .button {
   align-items: center;
   background-color: $primary;
+  border: none;
   border-radius: 5px;
-  display: inline-flex;
+  display: flex;
   color: $white;
+  justify-content: center;
   padding: 12px;
   text-decoration: none;
   transition: $transition background-color;
@@ -20,4 +22,17 @@
 .button--secondary {
   background-color: $secondary;
   color: $white;
+}
+
+.button--alternate {
+  background-color: lighten($secondary, 20%);
+  border-radius: 24px;
+  font-size: 14px;
+  height: 28px;
+  padding: 0;
+  width: 28px;
+}
+
+.button--delete {
+  background-color: $warning;
 }
