@@ -2,3 +2,13 @@
   display: block;
   padding: 6px 0;
 }
+
+.form-field--error label {
+  color: $warning;
+}
+
+.form-field--error input[type="text"],
+.form-field--error input[type="number"],
+.form-field--error textarea {
+  border-color: $warning;
+}

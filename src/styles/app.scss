@@ -3,6 +3,7 @@
 @import "settings/fonts";
 @import "settings/transitions";
 
+@import "generic/box-sizing";
 @import "generic/normalize";
 
 @import "elements/body";
@@ -18,5 +19,6 @@
 @import "components/filters";
 @import "components/form-field";
 @import "components/header";
+@import "components/message";
 @import "components/toggle";
 @import "components/zero-state";

@@ -20,6 +20,15 @@ interface IFormInput {
   title: string;
 };
 
+interface FormFields {
+  defaultValue: string | number;
+  label: string;
+  name: string;
+  type: string;
+  validators?: {};
+  validationMessage?: string;
+};
+
 const Edit: React.FC<Props> = ({ match }) => {
   const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
   const id = parseInt(match.params.id, 10);
@@ -45,72 +54,98 @@ const Edit: React.FC<Props> = ({ match }) => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(books));
   };
 
+  const formFields: FormFields[] = [
+    {
+      defaultValue: book?.title || '',
+      label: 'Title',
+      name: 'title',
+      type: 'text',
+      validators: {
+        required: true,
+      },
+      validationMessage: 'This field is required.',
+    },
+    {
+      defaultValue: book?.author || '',
+      label: 'Author',
+      name: 'author',
+      type: 'text',
+      validators: {
+        required: true,
+      },
+      validationMessage: 'This field is required.'
+    },
+    {
+      defaultValue: book?.isbn || '',
+      label: 'ISBN',
+      name: 'isbn',
+      type: 'text',
+      validators: {
+        required: true,
+      },
+      validationMessage: 'This field is required',
+    },
+    {
+      defaultValue: book?.inventory || 0,
+      label: 'Inventory',
+      name: 'inventory',
+      type: 'number',
+      validators: {
+        required: true,
+        min: 0,
+      },
+      validationMessage: 'You cannot have negative inventory',
+    },
+    {
+      defaultValue: book?.category || '',
+      label: 'Category',
+      name: 'category',
+      type: 'text',
+      validators: {
+        required: true,
+      },
+      validationMessage: 'This field is required',
+    },
+    {
+      defaultValue: book?.notes || '',
+      label: 'Additional notes',
+      name: 'notes',
+      type: 'textarea',
+    },
+  ];
+
   return (
     <>
       {book ? (
         <>
           <Header heading="Edit book information" />
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div>
-              <label htmlFor="title">Title</label>
-              <input
-                defaultValue={book.title}
-                {...register('title', { required: true })}
-              />
-              {errors.title && (
-                <span>This field is required</span>
-              )}
-            </div>
-            <div>
-              <label htmlFor="author">Author</label>
-              <input
-                defaultValue={book.author}
-                {...register('author', { required: true })}
-              />
-              {errors.author && (
-                <span>This field is required</span>
-              )}
-            </div>
-            <div>
-              <label htmlFor="isbn">ISBN</label>
-              <input
-                defaultValue={book.isbn}
-                {...register('isbn', { pattern: /^[0-9]{10}$/i })}
-              />
-              {errors.isbn && (
-                <span>The ISBN must be exactly ten digits.</span>
-              )}
-            </div>
-            <div>
-              <label htmlFor="inventory">Inventory</label>
-              <input
-                defaultValue={book.inventory}
-                type="number"
-                {...register('inventory', { min: 0 })}
-              />
-              {errors.inventory && (
-                <span>You cannot have negative inventory.</span>
-              )}
-            </div>
-            <div>
-              <label htmlFor="category">Category</label>
-              <input
-                defaultValue={book.category}
-                {...register('category', { required: true })}
-              />
-              {errors.category && (
-                <span>This field is required.</span>
-              )}
-            </div>
-            <div>
-              <label htmlFor="notes">Notes</label>
-              <textarea
-                defaultValue={book.notes?.toString()}
-                {...register('notes')}
-              />
-            </div>
-            <button type="submit">Update</button>
-          </form>
+          <div className="wrapper">
+            <form onSubmit={handleSubmit(onSubmit)}>
+              {formFields.map((field) => (
+                <div className={errors[field.name] ? 'form-field form-field--error' : 'form-field'}>
+                  <label htmlFor={field.name}>{field.label}</label>
+                  {field.type === 'textarea' ? (
+                    <textarea
+                      defaultValue={field.defaultValue}
+                      {...register((`${field.name}` as const), { ...field.validators })}
+                    />
+                  ) : (
+                    <input
+                      defaultValue={field.defaultValue}
+                      type={field.type}
+                      {...register((`${field.name}` as const), { ...field.validators })}
+                    />
+                  )}
+                  {errors[field.name] && (
+                    <span className="message--error">{field.validationMessage}</span>
+                  )}
+                </div>
+              ))}
+              <div className="button__container--right">
+                <button className="button" type="submit">Update</button>
+              </div>
+            </form>
+          </div>
         </>
       ) : (
         <p>No book with ID # {id} found.</p>

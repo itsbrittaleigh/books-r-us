@@ -8,14 +8,34 @@ legend {
   display: block;
 }
 
+label {
+  color: $gray;
+  display: block;
+  font-size: 0.9rem;
+}
+
 input[type="checkbox"] {
-  opacity: 0;
-  width: 0;
-  height: 0;
-  margin: 0;
-  padding: 0;
   border: 0;
+  height: 0;
+  left: -100000000px;
+  margin: 0;
+  opacity: 0;
+  padding: 0;
   position: absolute;
   top: -100000000px;
-  left: -100000000px;
+  width: 0;
+}
+
+input[type="text"],
+input[type="number"],
+textarea {
+  border-radius: 3px;
+  border: 2px solid $gray;
+  display: block;
+  padding: 6px;
+  width: 100%;
+}
+
+textarea {
+  min-height: 100px;
 }

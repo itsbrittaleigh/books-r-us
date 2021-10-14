@@ -36,3 +36,8 @@
 .button--delete {
   background-color: $warning;
 }
+
+.button__container--right {
+  display: flex;
+  justify-content: flex-end;
+}
