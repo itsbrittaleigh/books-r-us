@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FiEdit2, FiTrash2 } from 'react-icons/fi';
 import Modal from './Modal';
-import { LOCAL_STORAGE_KEY } from '../constants';
+import { removeBookById } from '../services/Book';
 
 interface Props {
   book: Book;
@@ -10,27 +10,19 @@ interface Props {
 const BookItem: React.FC<Props> = ({
   book: {
     author,
-    category,
     id,
     inventory,
-    isbn,
-    notes,
     title,
   },
 }) => {
-  const books: Book[] = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)!);
   const [displayConfirmationModal, setDisplayConfirmationModal] = useState<boolean>(false);
 
   const deleteBook = (): void => {
-    const index = books.findIndex((book: Book) => book.id === id);
-    if (index > -1) {
-      books.splice(index, 1);
-    }
-
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(books));
-
-    // refresh page to show updated list
-    window.location.reload();
+    removeBookById(id)
+      .then(() => {
+        window.scrollTo(0, 0);
+        window.location.reload();
+      });
   };
 
   return (

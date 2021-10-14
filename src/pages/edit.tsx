@@ -1,8 +1,9 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
-import { LOCAL_STORAGE_KEY } from '../constants';
+import { getBookById, removeBookById, updateBookById } from '../services/Book';
 
 interface Props {
   match: {
@@ -22,28 +23,26 @@ interface IFormInput {
 };
 
 const Edit: React.FC<Props> = ({ match }) => {
+  const history = useHistory();
   const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
   const id = parseInt(match.params.id, 10);
-  const books: Book[] = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)!);
-  const book: Book | undefined = books.find((book: Book) => book.id === id);
+  const book = getBookById(id);
+
+  const deleteBook = (): void => {
+    removeBookById(id).then(() => {
+      window.scrollTo(0, 0);
+      history.push('/');
+    });
+  };
 
   const onSubmit = (data: IFormInput) => {
-    // remove book from books array
-    const index = books.findIndex((book) => book.id === id);
-    if (index > -1) {
-      books.splice(index, 1);
-    }
+    const newData = { ...data, id };
 
-    // add data to books array with current id
-    books.push({
-      ...data,
-      // inventory should be an integer, but HTML input treats it as a string
-      inventory: parseInt(data.inventory.toString(), 10),
-      id,
-    });
-
-    // save to localStorage
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(books));
+    updateBookById(id, newData)
+      .then(() => {
+        window.scrollTo(0, 0);
+        history.push('/');
+      });
   };
 
   return (
@@ -116,7 +115,14 @@ const Edit: React.FC<Props> = ({ match }) => {
                   {...register('notes')}
                 />
               </div>
-              <div className="button__container--right">
+              <div className="button__container button__container--right">
+                <button
+                  className="button--link button--delete"
+                  type="button"
+                  onClick={deleteBook}
+                >
+                  Delete
+                </button>
                 <button className="button" type="submit">Update</button>
               </div>
             </form>

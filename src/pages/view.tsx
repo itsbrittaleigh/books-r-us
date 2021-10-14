@@ -2,7 +2,7 @@ import React from 'react';
 import { FiEdit2 } from 'react-icons/fi';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
-import { LOCAL_STORAGE_KEY } from '../constants';
+import { getBookById } from '../services/Book';
 
 interface Props {
   match: {
@@ -14,8 +14,7 @@ interface Props {
 
 const View: React.FC<Props> = ({ match }) => {
   const id = parseInt(match.params.id, 10);
-  const books: Book[] = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)!);
-  const book: Book | undefined = books.find((book: Book) => book.id === id);
+  const book: Book | undefined = getBookById(id);
 
   return (
     <>

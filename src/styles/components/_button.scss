@@ -42,6 +42,7 @@
   border: none;
   background-color: transparent;
   color: $primary;
+  cursor: pointer;
   display: block;
   font-weight: bold;
   margin: 0;
@@ -49,6 +50,11 @@
 
   &:hover {
     text-decoration: underline;
+  }
+
+  &.button--delete {
+    color: $warning;
+    background-color: transparent;
   }
 }
 

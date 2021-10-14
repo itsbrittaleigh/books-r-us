@@ -1,9 +1,10 @@
 import React from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { FiTrash2 } from 'react-icons/fi';
+import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
-import { LOCAL_STORAGE_KEY } from '../constants';
+import { createBooks } from '../services/Book';
 
 type FormValues = {
   books: {
@@ -27,9 +28,7 @@ const defaultValues = {
 };
 
 const Create: React.FC = () => {
-  const books = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)!);
-  const nextId = Math.max.apply(Math, books.map((book: Book) => book.id )) + 1;
-
+  const history = useHistory();
   const { control, formState: { errors }, handleSubmit, register } = useForm<FormValues>({
     defaultValues: {
       books: [{ ...defaultValues }],
@@ -42,18 +41,10 @@ const Create: React.FC = () => {
   });
 
   const onSubmit = (data: FormValues) => {
-    const booksToAdd = data.books;
-
-    booksToAdd.forEach((book, idx) => {
-      // convert inventories to numbers
-      book.inventory = parseInt(book.inventory.toString(), 10);
-      // add IDs
-      book.id = nextId + idx;
+    createBooks(data.books).then(() => {
+      window.scrollTo(0, 0);
+      history.push('/')
     });
-
-    books.push(...booksToAdd);
-
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(books));
   };
 
   return (
@@ -67,6 +58,7 @@ const Create: React.FC = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           {fields.map((field, index) => (
             <section key={field.id}>
+              <h2>Add book #{index + 1}</h2>
               <div className={errors?.books?.[index]?.title ? 'form-field form-field--error' : 'form-field'}>
                 <label htmlFor={`books.${index}.title`}>Title</label>
                 <input
@@ -79,7 +71,7 @@ const Create: React.FC = () => {
                   type="text"
                 />
                 {errors?.books?.[index]?.title && (
-                  <span>This field is required.</span>
+                  <span className="message--error">This field is required.</span>
                 )}
               </div>
               <div className={errors?.books?.[index]?.author ? 'form-field form-field--error' : 'form-field'}>
@@ -94,7 +86,7 @@ const Create: React.FC = () => {
                   type="text"
                 />
                 {errors?.books?.[index]?.author && (
-                  <span>This field is required.</span>
+                  <span className="message--error">This field is required.</span>
                 )}
               </div>
               <div className={errors?.books?.[index]?.isbn ? 'form-field form-field--error' : 'form-field'}>
@@ -104,12 +96,11 @@ const Create: React.FC = () => {
                     `books.${index}.isbn` as const,
                     {
                       required: true,
-                      pattern: /^[0-9]{10}$/i,
                     })}
                   type="text"
                 />
                 {errors?.books?.[index]?.isbn && (
-                  <span>Your ISBN must be 10 digits.</span>
+                  <span className="message--error">This field is required.</span>
                 )}
               </div>
               <div className={errors?.books?.[index]?.inventory ? 'form-field form-field--error' : 'form-field'}>
@@ -124,7 +115,7 @@ const Create: React.FC = () => {
                   type="number"
                 />
                 {errors?.books?.[index]?.inventory && (
-                  <span>You cannot have negative inventory.</span>
+                  <span className="message--error">You cannot have negative inventory.</span>
                 )}
               </div>
               <div className={errors?.books?.[index]?.category ? 'form-field form-field--error' : 'form-field'}>
@@ -138,7 +129,7 @@ const Create: React.FC = () => {
                   type="text"
                 />
                 {errors?.books?.[index]?.category && (
-                  <span>This field is required.</span>
+                  <span className="message--error">This field is required.</span>
                 )}
               </div>
               <div className="form-field">

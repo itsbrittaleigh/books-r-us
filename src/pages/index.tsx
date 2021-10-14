@@ -4,18 +4,18 @@ import { useHistory } from 'react-router-dom';
 import BookList from '../components/BookList';
 import Filters from '../components/Filters';
 import Header from '../components/Header';
+import { getAllBooks } from '../services/Book';
 
 interface Props {
-  books: Book[];
   urlDisplayAvailable: boolean;
   urlFilteredGenres: string[];
 };
 
 const Home: React.FC<Props> = ({
-  books,
   urlDisplayAvailable,
   urlFilteredGenres,
 }) => {
+  const books: Book[] = getAllBooks();
   const [displayOnlyAvailable, setDisplayOnlyAvailable] = useState<boolean>(
     urlDisplayAvailable ? urlDisplayAvailable : false
   );
@@ -47,7 +47,7 @@ const Home: React.FC<Props> = ({
   const buildGenres = function(): string[] {
     const genres: string[] = [];
 
-    books.forEach((book) => {
+    books && books.forEach((book) => {
       if (!genres.includes(book.category)) {
         genres.push(book.category);
       }

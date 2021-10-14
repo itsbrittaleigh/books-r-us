@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,14 +13,11 @@ import { LOCAL_STORAGE_KEY } from './constants';
 import "./styles/app.scss";
 
 const App: React.FC = () => {
-  const [books, setBooks] = useState<Book[]>(booksMock);
   const params = (new URL(`${document.location}`)).searchParams;
 
   useEffect(() => {
-    if (localStorage.getItem(LOCAL_STORAGE_KEY)) {
-      setBooks(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)!));
-    } else {
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(books));
+    if (!localStorage.getItem(LOCAL_STORAGE_KEY)) {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(booksMock));
     }
     // empty dependency array because we do not want this to trigger re-render in an infinite loop
   }, []);
@@ -33,7 +30,6 @@ const App: React.FC = () => {
       <Switch>
         <Route exact path="/">
           <Home
-            books={books}
             urlDisplayAvailable={urlDisplayAvailable}
             urlFilteredGenres={urlFilteredGenres || []}
           />
