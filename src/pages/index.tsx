@@ -64,18 +64,24 @@ const Home: React.FC<Props> = ({
           Add book
         </a>
       </Header>
-      <Filters
-        displayOnlyAvailable={displayOnlyAvailable}
-        filteredGenres={filteredGenres}
-        genres={buildGenres()}
-        setFilteredGenres={setFilteredGenres}
-        toggleDisplayOnlyAvailable={setDisplayOnlyAvailable}
-      />
-      <BookList
-        books={books}
-        displayOnlyAvailable={displayOnlyAvailable}
-        filteredGenres={filteredGenres}
-      />
+      {books.length > 0 ? (
+        <>
+          <Filters
+            displayOnlyAvailable={displayOnlyAvailable}
+            filteredGenres={filteredGenres}
+            genres={buildGenres()}
+            setFilteredGenres={setFilteredGenres}
+            toggleDisplayOnlyAvailable={setDisplayOnlyAvailable}
+          />
+          <BookList
+            books={books}
+            displayOnlyAvailable={displayOnlyAvailable}
+            filteredGenres={filteredGenres}
+          />
+        </>
+      ) : (
+        <p className="zero-state">There are no books in inventory.</p>
+      )}
     </>
   );
 };
