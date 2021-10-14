@@ -1,0 +1,7 @@
+a:not(.button) {
+  color: $primary;
+  display: block;
+  font-weight: bold;
+  margin: 12px 0 0;
+  text-decoration: none;  
+}
