@@ -61,6 +61,12 @@ const Create: React.FC = () => {
 
     isbns.push(...currentIsbns);
 
+    // but remove the current ISBN from the list
+    const index = isbns.findIndex((isbn: string) => isbn === value);
+    if (index > -1) {
+      isbns.splice(index, 1);
+    }
+
     return !(isbns.includes(value));
   };
 
