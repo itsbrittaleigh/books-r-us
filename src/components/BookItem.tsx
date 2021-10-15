@@ -19,6 +19,7 @@ const BookItem: React.FC<Props> = ({
 
   const deleteBook = (): void => {
     removeBookById(id)
+      // redirect to home page after deleted
       .then(() => {
         window.scrollTo(0, 0);
         window.location.reload();

@@ -30,6 +30,7 @@ const BookList: React.FC<Props> = ({
   <div className="wrapper">
     {books
       .sort(alphabetize)
+      // filter books based on user selections
       .filter((book: Book) => displayOnlyAvailable ? book.inventory > 0 : true)
       .filter((book: Book) => filteredGenres.length > 0 ? (filteredGenres as string[]).includes(book.category) : true)
       .map((book: Book) => (

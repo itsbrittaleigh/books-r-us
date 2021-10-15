@@ -15,7 +15,10 @@ const Checkbox: React.FC<Props> = ({
   onToggle,
   value,
 }) => (
-  <label className={isChecked ? 'checkbox__label checkbox__label--is-checked' : 'checkbox__label'} htmlFor={id}>
+  <label
+    className={isChecked ? 'checkbox__label checkbox__label--is-checked' : 'checkbox__label'}
+    htmlFor={id}
+  >
     <input
       checked={isChecked}
       id={id}

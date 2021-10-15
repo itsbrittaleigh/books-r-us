@@ -1,5 +1,5 @@
 import React from 'react';
-import { useForm, useFieldArray } from 'react-hook-form';
+import { useForm, useFieldArray } from 'react-hook-form'; // https://react-hook-form.com/
 import { FiTrash2 } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
@@ -41,6 +41,7 @@ const Create: React.FC = () => {
 
   const onSubmit = (data: FormValues) => {
     createBooks(data.books).then(() => {
+      // redirect to home page after created
       window.scrollTo(0, 0);
       history.push('/')
     });
@@ -75,14 +76,17 @@ const Create: React.FC = () => {
           {fields.map((field, index) => (
             <section key={field.id}>
               <h2>Add book #{index + 1}</h2>
+              {/*
+                * ✅ ♻️ TODO —
+                * loop through fields and pull into components;
+                * could not figure out how to effectively do this without TypeScript errors
+              */}
               <div className={errors?.books?.[index]?.title ? 'form-field form-field--error' : 'form-field'}>
                 <label htmlFor={`books.${index}.title`}>Title</label>
                 <input
                   {...register(
                     `books.${index}.title` as const,
-                    {
-                      required: true,
-                    },
+                    { required: true },
                   )}
                   type="text"
                 />
@@ -95,9 +99,7 @@ const Create: React.FC = () => {
                 <input
                   {...register(
                     `books.${index}.author` as const,
-                    {
-                      required: true,
-                    }
+                    { required: true }
                   )}
                   type="text"
                 />
@@ -110,10 +112,8 @@ const Create: React.FC = () => {
                 <input
                   {...register(
                     `books.${index}.isbn` as const,
-                    {
-                      required: true,
-                      validate: (value) => validateIsbn(value),
-                    })}
+                    { required: true, validate: (value) => validateIsbn(value) }
+                  )}
                   type="text"
                 />
                 {errors?.books?.[index]?.isbn && (
@@ -125,10 +125,8 @@ const Create: React.FC = () => {
                 <input
                   {...register(
                     `books.${index}.inventory` as const,
-                    {
-                      required: true,
-                      min: 0,
-                    })}
+                    { required: true, min: 0 }
+                  )}
                   type="number"
                 />
                 {errors?.books?.[index]?.inventory && (
@@ -140,9 +138,8 @@ const Create: React.FC = () => {
                 <input
                   {...register(
                     `books.${index}.category` as const,
-                    {
-                      required: true,
-                    })}
+                    { required: true }
+                  )}
                   type="text"
                 />
                 {errors?.books?.[index]?.category && (

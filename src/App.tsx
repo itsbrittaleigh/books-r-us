@@ -15,6 +15,7 @@ import "./styles/app.scss";
 const App: React.FC = () => {
   const params = (new URL(`${document.location}`)).searchParams;
 
+  // if localStorage has not been populated with books yet, populate it with the mock data
   useEffect(() => {
     if (!localStorage.getItem(LOCAL_STORAGE_KEY)) {
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(booksMock));
@@ -22,6 +23,7 @@ const App: React.FC = () => {
     // empty dependency array because we do not want this to trigger re-render in an infinite loop
   }, []);
 
+  // URL parameters are used to persist data on refresh or direct link access
   const urlDisplayAvailable: boolean = !!params.get('displayAvailable');
   const urlFilteredGenres: string[] | undefined = params.get('genre') ? params.get('genre')?.split('__') : [];
 

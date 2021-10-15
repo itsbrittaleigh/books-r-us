@@ -15,6 +15,7 @@ const Modal: React.FC<Props> = ({
   isVisible,
 }) => {
   useEffect(() => {
+    // close modal when user hits ESC key
     const close = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         closeModal(true);

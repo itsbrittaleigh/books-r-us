@@ -16,6 +16,7 @@ const Home: React.FC<Props> = ({
   urlFilteredGenres,
 }) => {
   const books: Book[] = getAllBooks();
+  // default filters based on URL params, if available
   const [displayOnlyAvailable, setDisplayOnlyAvailable] = useState<boolean>(
     urlDisplayAvailable ? urlDisplayAvailable : false
   );
@@ -24,6 +25,7 @@ const Home: React.FC<Props> = ({
   );
   const history = useHistory();
 
+  // update URL parameters when engaging with filters
   useEffect(() => {
     const params = new URLSearchParams();
 
@@ -44,6 +46,7 @@ const Home: React.FC<Props> = ({
     });
   }, [displayOnlyAvailable, filteredGenres, history]);
 
+  // build list of genres from genres on books
   const buildGenres = function(): string[] {
     const genres: string[] = [];
 

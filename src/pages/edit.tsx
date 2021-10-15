@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form'; // https://react-hook-form.com/
 import { useHistory } from 'react-router-dom';
 import DeleteModal from '../components/DeleteModal';
 import Header from '../components/Header';
@@ -32,6 +32,7 @@ const Edit: React.FC<Props> = ({ match }) => {
 
   const deleteBook = (): void => {
     removeBookById(id).then(() => {
+      // redirect to home page after deleted
       window.scrollTo(0, 0);
       history.push('/');
     });
@@ -68,6 +69,11 @@ const Edit: React.FC<Props> = ({ match }) => {
           <Header heading="Edit book information" />
           <div className="wrapper">
             <form onSubmit={handleSubmit(onSubmit)}>
+              {/*
+                * ✅ ♻️ TODO —
+                * loop through fields and pull into components;
+                * could not figure out how to effectively do this without TypeScript errors
+              */}
               <div className={errors.title ? 'form-field form-field--error' : 'form-field'}>
                 <label htmlFor="title">Title</label>
                 <input
